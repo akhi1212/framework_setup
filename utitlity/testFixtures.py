@@ -21,4 +21,4 @@ def startbrowser(request):
     driver.implicitly_wait(configReader.readConfigData('Details', 'globalWait'))
     request.cls.driver = driver
     yield
-    driver.close()
+    #driver.close()
