@@ -3,9 +3,10 @@ from locators_testdata import configReader
 import os
 from selenium import webdriver
 
-@pytest.fixture()
-def startbrowser():
-    global driver
+global driver
+@pytest.fixture(scope="class")
+def startbrowser(request):
+
     if ((configReader.readConfigData('Details', 'browser')) == 'chrome'):
         driver = webdriver.Chrome(os.path.relpath('../driver/chromedriver'))
     elif ((configReader.readConfigData('Details', 'browser')) == 'firefox'):
@@ -18,5 +19,6 @@ def startbrowser():
 
      ## implicit wait to load complete page
     driver.implicitly_wait(configReader.readConfigData('Details', 'globalWait'))
+    request.cls.driver = driver
     yield
     driver.close()
